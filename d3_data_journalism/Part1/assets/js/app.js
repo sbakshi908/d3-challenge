@@ -51,8 +51,7 @@ d3.csv("assets/Data/data.csv").then(function (smokerData) {
       .call(bottomAxis);
     chartGroup.append("g")
       .call(leftAxis);
-
-    //cerate the circles for plotting 
+    //creates the circles group for plotting 
     
     var circlesGroup = chartGroup.selectAll("circle")
     .data(smokerData)
@@ -89,9 +88,10 @@ d3.csv("assets/Data/data.csv").then(function (smokerData) {
       .attr("class", "axisText")
       .text("Lacks Healthcare (%)");
 
-
     //Initialize tool tip
-  
+
+    // Step 6: Initialize tool tip
+    // ==============================
     var toolTip = d3.tip()
     .attr("class", "tooltip")
     .offset([80, -60])
@@ -99,6 +99,23 @@ d3.csv("assets/Data/data.csv").then(function (smokerData) {
     return (`${d.state}<br>Poverty %: ${d.poverty}<br>Obesity%: ${d.obesity}`);
     });
     chartGroup.call(toolTip);
+
+    // Step 7: Create tooltip in the chart
+    // ==============================
+    chartGroup.call(toolTip);
+
+    // Step 8: Create event listeners to display and hide the tooltip
+    // ==============================
+    circlesGroup.on("click", function(data) {
+      toolTip.show(data, this);
+    })
+      // onmouseout event
+      .on("mouseout", function(data, index) {
+        toolTip.hide(data);
+      });
+
+  
+    
   
 });
 
